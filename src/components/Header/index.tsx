@@ -1,8 +1,8 @@
+import { IconButton } from '@mui/material';
 import { ChangeEvent, useCallback } from 'react';
 import { SearchOutlined, CloseOutlined } from '@mui/icons-material';
 
 import { Container, TextInput } from './styles';
-import { IconButton } from '@mui/material';
 
 interface HeaderProps {
   text: string;
