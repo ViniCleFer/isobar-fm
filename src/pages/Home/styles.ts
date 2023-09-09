@@ -9,6 +9,6 @@ export const ListContainer = styled('main')`
   background-color: ${({ theme }) => theme.palette.common.white};
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   padding: 18px;
 `;

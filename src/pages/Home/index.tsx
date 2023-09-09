@@ -4,6 +4,7 @@ import { api } from '../../services/api';
 import { Band } from '../../services/types';
 
 import { Header } from '../../components/Header';
+import { ListCardItem } from '../../components/ListCardItem';
 
 import { Container, ListContainer } from './styles';
 
@@ -34,7 +35,7 @@ export function Home() {
       <Header text={bandName} setText={setBandName} />
       <ListContainer>
         {searchResults?.map((item) => (
-          <span key={item.id}>{item.name}</span>
+          <ListCardItem key={item.id} band={item} />
         ))}
       </ListContainer>
     </Container>
