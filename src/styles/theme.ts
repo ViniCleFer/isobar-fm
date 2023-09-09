@@ -5,6 +5,9 @@ export default createTheme({
     fontFamily: 'Roboto, sans-serif',
   },
   palette: {
+    background: {
+      default: '#F2F2F2',
+    },
     primary: {
       main: '#F05D31',
     },
