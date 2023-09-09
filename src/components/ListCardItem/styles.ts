@@ -1,13 +1,15 @@
 import { styled } from '@mui/material/styles';
-import { Typography, Box, Avatar } from '@mui/material';
+import { Typography, Box, Avatar, Button } from '@mui/material';
 
-export const Container = styled('div')`
+export const Container = styled(Button)`
   padding: 8px;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  color: ${({ theme }) => theme.palette.text.primary};
 
-  & + div {
+  & + button {
     border-top: 1px solid ${({ theme }) => theme.palette.divider};
   }
 `;
@@ -20,6 +22,8 @@ export const BandAvatar = styled(Avatar)`
 
 export const InfoItems = styled(Box)`
   margin-left: 16px;
+  justify-content: flex-start;
+  text-align: left;
 `;
 
 export const BandName = styled(Typography)`
