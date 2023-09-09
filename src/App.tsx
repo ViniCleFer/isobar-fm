@@ -2,13 +2,13 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import theme from './styles/theme';
 
-import { Home } from './pages/Home';
+import { Routes } from './routes';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Home />
+      <Routes />
     </ThemeProvider>
   );
 }
