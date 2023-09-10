@@ -4,6 +4,8 @@ import { SearchOutlined, CloseOutlined } from '@mui/icons-material';
 
 import { Container, TextInput } from './styles';
 
+import { Logo } from '../Logo';
+
 interface HeaderProps {
   text: string;
   setText: (text: string) => void;
@@ -32,6 +34,8 @@ export function Header({ text, setText }: HeaderProps) {
           ) : null,
         }}
       />
+
+      <Logo />
     </Container>
   );
 }
