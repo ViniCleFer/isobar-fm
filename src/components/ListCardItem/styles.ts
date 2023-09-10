@@ -9,6 +9,10 @@ export const Container = styled(Button)`
   justify-content: flex-start;
   color: ${({ theme }) => theme.palette.text.primary};
 
+  &:hover {
+    cursor: pointer;
+  }
+
   & + button {
     border-top: 1px solid ${({ theme }) => theme.palette.divider};
   }
