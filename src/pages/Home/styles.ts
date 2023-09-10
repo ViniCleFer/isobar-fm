@@ -6,6 +6,7 @@ export const Container = styled(MuiContainer)`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  margin-bottom: 24px;
 `;
 
 export const Content = styled('main')`

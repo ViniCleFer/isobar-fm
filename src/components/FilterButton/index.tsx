@@ -1,15 +1,18 @@
 import { useState, MouseEvent } from 'react';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
 import { ImportExportOutlined } from '@mui/icons-material';
+import { Button } from './styles';
 
 interface FilterButtonProps {
   handleAlphabeticSort: () => void;
-  handlePopularitySort: () => void;
+  handleMorePopularSort: () => void;
+  handleLessPopularSort: () => void;
 }
 
 export function FilterButton({
   handleAlphabeticSort,
-  handlePopularitySort,
+  handleMorePopularSort,
+  handleLessPopularSort,
 }: FilterButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -22,30 +25,27 @@ export function FilterButton({
     setAnchorEl(null);
   };
 
+  const handleAlphabeticSortClick = () => {
+    handleAlphabeticSort();
+    handleClose();
+  };
+
+  const handleMorePopularSortClick = () => {
+    handleMorePopularSort();
+    handleClose();
+  };
+
+  const handleLessPopularSortClick = () => {
+    handleLessPopularSort();
+    handleClose();
+  };
+
   return (
     <>
-      <Button
-        id='demo-positioned-button'
-        aria-controls={open ? 'demo-positioned-menu' : undefined}
-        aria-haspopup='true'
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-        sx={{
-          width: '40px',
-          height: '40px',
-          borderRadius: '4px',
-          backgroundColor: 'black',
-          position: 'absolute',
-          right: 0,
-          zIndex: 999,
-          padding: 0,
-        }}
-      >
+      <Button onClick={handleClick}>
         <ImportExportOutlined sx={{ color: 'white' }} />
       </Button>
       <Menu
-        id='demo-positioned-menu'
-        aria-labelledby='demo-positioned-button'
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
@@ -57,11 +57,17 @@ export function FilterButton({
           vertical: 'top',
           horizontal: 'right',
         }}
-        sx={{ marginTop: '40px' }}
-        style={{}}
+        sx={{ marginTop: 0, marginLeft: '16px' }}
       >
-        <MenuItem onClick={handleAlphabeticSort}>Ordem Alfabética</MenuItem>
-        <MenuItem onClick={handlePopularitySort}>Popularidade</MenuItem>
+        <MenuItem onClick={handleAlphabeticSortClick}>
+          Ordem Alfabética
+        </MenuItem>
+        <MenuItem onClick={handleMorePopularSortClick}>
+          Mais Popularidade
+        </MenuItem>
+        <MenuItem onClick={handleLessPopularSortClick}>
+          Menos Popularidade
+        </MenuItem>
       </Menu>
     </>
   );

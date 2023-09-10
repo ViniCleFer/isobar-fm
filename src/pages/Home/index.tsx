@@ -62,18 +62,33 @@ export function Home() {
     setFilteredBandsList([...sortedBands]);
   }, [bandsList]);
 
-  const handlePopularitySort = useCallback(() => {
-    const sortedBands = bandsList.sort((a, b) => {
-      if (a.numPlays > b.numPlays) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
+  const handlePopularitySort = useCallback(
+    (type: 'more' | 'less') => {
+      let sortedBands = [];
 
-    setBandsList([...sortedBands]);
-    setFilteredBandsList([...sortedBands]);
-  }, [bandsList]);
+      if (type === 'more') {
+        sortedBands = bandsList.sort((a, b) => {
+          if (a.numPlays > b.numPlays) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+      } else {
+        sortedBands = bandsList.sort((a, b) => {
+          if (a.numPlays < b.numPlays) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+      }
+
+      setBandsList([...sortedBands]);
+      setFilteredBandsList([...sortedBands]);
+    },
+    [bandsList]
+  );
 
   return (
     <Container>
@@ -89,7 +104,8 @@ export function Home() {
         {filteredBandsList.length > 0 && (
           <FilterButton
             handleAlphabeticSort={handleAlphabeticSort}
-            handlePopularitySort={handlePopularitySort}
+            handleMorePopularSort={() => handlePopularitySort('more')}
+            handleLessPopularSort={() => handlePopularitySort('less')}
           />
         )}
 
