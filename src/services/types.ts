@@ -6,6 +6,7 @@ export interface Band {
   numPlays: number;
   id: string;
   albums: Array<string>;
+  foundedAlbums?: Array<Album>;
 }
 
 export interface Track {
