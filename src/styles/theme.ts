@@ -14,6 +14,7 @@ export default createTheme({
     grey: {
       '100': '#EEEFF1',
       '300': '#D9D9D9',
+      '400': '#CCCCCC',
       '500': '#656668',
       '900': '#323534',
     },
