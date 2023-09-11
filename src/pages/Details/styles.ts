@@ -7,6 +7,14 @@ import {
   Typography,
 } from '@mui/material';
 
+export const LoadingContainer = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 100px);
+`;
+
 export const Container = styled(MuiContainer)`
   padding: 0 !important;
   display: flex;

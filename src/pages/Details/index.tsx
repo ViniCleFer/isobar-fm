@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AddOutlined, ArrowBackIosRounded } from '@mui/icons-material';
 
-import { api } from '../../services/api';
-import { Album, Band } from '../../services/types';
+import { Band, getBandByIdRequest } from '../../services/requests/band';
+import { Album, getAlbumByIdRequest } from '../../services/requests/album';
 
 import {
   Container,
@@ -19,11 +19,13 @@ import {
   DividerContainer,
   AlbumsTitle,
   GridContainer,
+  LoadingContainer,
 } from './styles';
 
 import { getFormattedPlaysOfNumber } from '../../util/getFormattedPlaysOfNumber';
 
 import { Logo } from '../../components/Logo';
+import { CircularProgress } from '@mui/material';
 
 export function Details() {
   const params = useParams();
@@ -33,27 +35,37 @@ export function Details() {
   const [recentlyReleasedAlbum, setRecentlyReleasedAlbum] = useState<Album>(
     {} as Album
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const loadBandById = useCallback(async () => {
-    const response = await api(`bands/${params?.id}`);
+    setIsLoading(true);
+    try {
+      const response = await getBandByIdRequest(params?.id as string);
 
-    if (response !== null) {
-      setSelectedBand(response);
+      if (response?.status === 200) {
+        setSelectedBand(response?.data);
 
-      if (response?.albums?.length > 0) {
-        const albums = response.albums.map(async (albumId: string) => {
-          const albumResponse = await api(`albums/${albumId}`);
+        if (response?.data?.albums?.length > 0) {
+          const albums = response?.data?.albums.map(async (albumId: string) => {
+            const albumResponse = await getAlbumByIdRequest(albumId);
 
-          return albumResponse;
-        });
+            if (albumResponse?.status === 200) {
+              return albumResponse?.data;
+            }
+          });
 
-        const albumsResponse = await Promise.all(albums);
+          const albumsResponse = await Promise.all(albums);
 
-        setSelectedBand((prevState) => ({
-          ...prevState,
-          foundedAlbums: albumsResponse,
-        }));
+          setSelectedBand((prevState) => ({
+            ...prevState,
+            foundedAlbums: albumsResponse,
+          }));
+        }
       }
+    } catch (error) {
+      console.error('Error on loadBandById => ', error);
+    } finally {
+      setIsLoading(false);
     }
   }, [params?.id]);
 
@@ -86,7 +98,11 @@ export function Details() {
     navigate(-1);
   }, [navigate]);
 
-  return (
+  return isLoading ? (
+    <LoadingContainer>
+      <CircularProgress />
+    </LoadingContainer>
+  ) : (
     <Container>
       <Header>
         <GoBackButton onClick={handleGoBack}>
