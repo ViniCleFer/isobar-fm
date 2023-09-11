@@ -1,27 +1,65 @@
-# React + TypeScript + Vite
+## 💻 Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Web App for viewing your favorite bands and their albums
 
-Currently, two official plugins are available:
+## :rocket: Technologies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project was developed with the following technologies:
 
-## Expanding the ESLint configuration
+- [Vite](https://vitejs.dev/)
+- [React](https://reactjs.org)
+- [Material UI](https://mui.com/)
+- [React Router Dom](https://reactrouter.com/en/main)
+- [Axios](https://axios-http.com/ptbr/docs/intro)
+- [Vitest](https://vitest.dev/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## :information_source: How To Use
 
-- Configure the top-level `parserOptions` property like this:
+To clone and run this application, you'll need [Git](https://git-scm.com), [Node.js][nodejs] installed on your computer.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+### Screens
+
+<p align="center">
+  <img alt="WeatherAppScreens" title="#WeatherAppScreens" src="src/assets/home.png" width="200px" style="margin-right: 10px;">
+  <img alt="WeatherAppScreens" title="#WeatherAppScreens" src="src/assets/filter.png" width="200px" style="margin-right: 10px;">
+  <img alt="WeatherAppScreens" title="#WeatherAppScreens" src="src/assets/no-results.png" width="200px" style="margin-right: 10px;">
+  <img alt="WeatherAppScreens" title="#WeatherAppScreens" src="src/assets/details.png" width="200px">
+</p>
+
+From your command line:
+
+### Add a .ENV configuration file
+
+```bash
+create an .env file in the root of your project and add your VITE_BACKEND_API_URL as in the .env.example file.
+
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Install App
+
+```bash
+# Clone this repository
+$ git clone https://github.com/ViniCleFer/isobar-fm.git
+
+# Install dependencies
+$ npm install or yarn
+
+# Run the APP
+$ npm run dev or yarn dev
+
+# Run tests
+$ npm run test or yarn test
+```
+
+[vite]: https://vitejs.dev/
+[nodejs]: https://nodejs.org/
+[yarn]: https://yarnpkg.com/
+[vc]: https://code.visualstudio.com/
+[vceditconfig]: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
+[vceslint]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+[prettier]: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+[react]: https://reactjs.org
+[materialui]: https://mui.com/
+[reactrouterdom]: https://reactrouter.com/en/main
+[axios]: https://axios-http.com/ptbr/docs/intro
+[vitest]: https://vitest.dev/
