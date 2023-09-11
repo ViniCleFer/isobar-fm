@@ -28,7 +28,7 @@ export function Header({ text, setText }: HeaderProps) {
         InputProps={{
           endAdornment: <SearchOutlined />,
           startAdornment: text ? (
-            <IconButton>
+            <IconButton onClick={() => setText('')}>
               <CloseOutlined />
             </IconButton>
           ) : null,
