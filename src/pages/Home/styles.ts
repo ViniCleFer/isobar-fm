@@ -5,8 +5,8 @@ export const Container = styled(MuiContainer)`
   padding: 0 !important;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  margin-bottom: 24px;
+  min-height: 100vh;
+  padding-bottom: 24px;
 `;
 
 export const Content = styled('main')`
@@ -37,12 +37,12 @@ export const ListContainer = styled(Box)`
   padding: 18px;
 `;
 
-export const NoResultsContainer = styled(Box)`
+export const NoResultsContainer = styled('div')`
   display: flex;
-  height: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: calc(100vh - 100px);
 `;
 
 export const NoResultsText = styled(Typography)`

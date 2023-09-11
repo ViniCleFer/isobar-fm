@@ -1,3 +1,4 @@
+import { TablePagination } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 
 import { api } from '../../services/api';
@@ -25,13 +26,15 @@ export function Home() {
   const [bandName, setBandName] = useState('');
   const [bandsList, setBandsList] = useState<Band[]>([]);
   const [filteredBandsList, setFilteredBandsList] = useState<Band[]>([]);
+  const [pageTotals, setPageTotals] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const loadBands = useCallback(async () => {
     const response = await api('bands');
 
     if (response !== null) {
       setBandsList(response);
-      setFilteredBandsList(response);
     }
   }, []);
 
@@ -39,15 +42,12 @@ export function Home() {
     loadBands();
   }, []);
 
-  useEffect(() => {
-    if (bandName.length > 0 && bandsList.length > 0) {
-      const searchResults = bandsList.filter((item) =>
-        item.name.toLowerCase().includes(bandName.toLowerCase())
-      );
+  const bandsFiltered = bandsList?.filter((u) =>
+    u?.name.toUpperCase().includes(bandName.toUpperCase())
+  );
 
-      setFilteredBandsList(searchResults);
-    }
-  }, [bandName, bandsList]);
+  const bandsListFiltered =
+    bandName.length > 0 ? bandsFiltered : filteredBandsList;
 
   const handleAlphabeticSort = useCallback(() => {
     const sortedBands = bandsList.sort((a, b) => {
@@ -90,18 +90,53 @@ export function Home() {
     [bandsList]
   );
 
+  useEffect(() => {
+    const startIndex = currentPage * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+
+    const usuariosExibidos = bandsList.slice(startIndex, endIndex);
+
+    const totalPage = Math.ceil(bandsList.length / rowsPerPage);
+    setPageTotals(totalPage);
+
+    setFilteredBandsList([...usuariosExibidos]);
+  }, [bandsList, rowsPerPage, currentPage]);
+
+  const handleChangePage = (_: unknown, newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setCurrentPage(0);
+  };
+
+  const defaultLabelDisplayedRows = ({
+    from,
+    to,
+    count,
+  }: {
+    from: number;
+    to: number;
+    count: number;
+  }) => {
+    return `${from}–${to} de ${count !== -1 ? count : `mais de ${to}`}`;
+  };
+
   return (
     <Container>
       <Header text={bandName} setText={setBandName} />
       <Content>
-        {bandName.length > 0 && filteredBandsList.length > 0 && (
+        {bandName.length > 0 && bandsListFiltered.length > 0 && (
           <ResultsSearchContainer>
             <ResultsSearchText>
-              {countTotalsOfBandsFounded(filteredBandsList?.length)}
+              {countTotalsOfBandsFounded(bandsListFiltered?.length)}
             </ResultsSearchText>
           </ResultsSearchContainer>
         )}
-        {filteredBandsList.length > 0 && (
+        {bandsListFiltered.length > 0 && (
           <FilterButton
             handleAlphabeticSort={handleAlphabeticSort}
             handleMorePopularSort={() => handlePopularitySort('more')}
@@ -109,18 +144,31 @@ export function Home() {
           />
         )}
 
-        <ListContainer>
-          {filteredBandsList?.length > 0 ? (
-            filteredBandsList?.map((item) => (
+        {bandsListFiltered?.length > 0 ? (
+          <ListContainer>
+            {bandsListFiltered?.map((item) => (
               <ListCardItem key={item.id} band={item} />
-            ))
-          ) : (
-            <NoResultsContainer>
-              <NoResultsText>Sem resultados...</NoResultsText>
-              <img width={200} height={200} src={tvIcon} alt='sad-tv-icon' />
-            </NoResultsContainer>
-          )}
-        </ListContainer>
+            ))}
+            <TablePagination
+              backIconButtonProps={{ disabled: currentPage === 0 }}
+              nextIconButtonProps={{ disabled: currentPage >= pageTotals - 1 }}
+              rowsPerPageOptions={[5, 10, 25]}
+              component='div'
+              count={bandsList.length}
+              rowsPerPage={rowsPerPage}
+              page={currentPage}
+              labelRowsPerPage='Linhas por página'
+              onPageChange={handleChangePage}
+              labelDisplayedRows={defaultLabelDisplayedRows}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </ListContainer>
+        ) : (
+          <NoResultsContainer>
+            <NoResultsText>Sem resultados...</NoResultsText>
+            <img width={200} height={200} src={tvIcon} alt='sad-tv-icon' />
+          </NoResultsContainer>
+        )}
       </Content>
     </Container>
   );
