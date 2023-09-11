@@ -1,15 +1,5 @@
-export const api = (params?: string) => {
-  const results = fetch(
-    `https://dws-recruiting-bands.dwsbrazil.io/api/${params}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      console.log(error);
-      return null;
-    });
+import axios from 'axios';
 
-  return results;
-};
+export const api = axios.create({
+  baseURL: `${import.meta.env.VITE_BACKEND_API_URL}` ?? '',
+});
