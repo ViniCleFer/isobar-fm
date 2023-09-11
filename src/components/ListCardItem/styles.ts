@@ -8,13 +8,10 @@ export const Container = styled(Button)`
   align-items: center;
   justify-content: flex-start;
   color: ${({ theme }) => theme.palette.text.primary};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
 
   &:hover {
     cursor: pointer;
-  }
-
-  & + button {
-    border-top: 1px solid ${({ theme }) => theme.palette.divider};
   }
 `;
 
